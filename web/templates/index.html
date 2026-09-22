@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DecodeLabs AI - Project 2: Data Classification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-badge">P2</div>
+        <div>
+          <div class="brand-sub">DecodeLabs Industrial Training Kit // Batch 2026</div>
+          <h1 class="brand-title">Data Classification Using AI</h1>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="status-pill status-ready">● Supervised Learning</span>
+        <span class="status-pill">Iris Benchmark (150 Samples)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- IPO Master Blueprint Row -->
+    <section class="blueprint-section">
+      <div class="section-tag">ARCHITECTURAL BLUEPRINT</div>
+      <h2 class="section-title">The IPO Classification Framework</h2>
+      <div class="ipo-grid">
+        <div class="ipo-card input-card">
+          <div class="ipo-badge">INPUT</div>
+          <h3>Iris Benchmark</h3>
+          <p>150 multi-dimensional samples across 3 balanced classes (Setosa, Versicolor, Virginica) with 4 flower features.</p>
+          <div class="ipo-meta">4 Dimensions • 50/50/50 Balance</div>
+        </div>
+
+        <div class="ipo-card process-card">
+          <div class="ipo-badge">PROCESS</div>
+          <h3>Scaling & KNN</h3>
+          <p>StandardScaler normalization ($\mu=0, \sigma=1$), 80/20 stratified split, and K-Nearest Neighbors proximity engine.</p>
+          <div class="ipo-meta">Elbow Method • K-Optimization</div>
+        </div>
+
+        <div class="ipo-card output-card">
+          <div class="ipo-badge">OUTPUT</div>
+          <h3>Diagnostics & Inference</h3>
+          <p>Beyond accuracy: Full Confusion Matrix (TP/FP/FN/TN), Precision, Recall, F1 Harmonic Mean & real-time inference.</p>
+          <div class="ipo-meta">Confusion Matrix • F1-Score</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Grid: Model Control + Live Prediction -->
+    <div class="dashboard-grid">
+      
+      <!-- Left Column: Controls & Hyperparameter Tuning -->
+      <div class="panel-column">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Hyperparameter Tuning (K-Value)</h3>
+            <span class="badge-sub">The Elbow Engine</span>
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="kInput">Number of Neighbors (K):</label>
+              <span id="kValBadge" class="val-badge">5</span>
+            </div>
+            <input type="range" id="kInput" min="1" max="21" step="2" value="5" class="custom-slider">
+            <div class="slider-hints">
+              <span>K=1 (Overfitting / Noise)</span>
+              <span>Optimal Elbow</span>
+              <span>K=21 (Underfitting)</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="slider-header">
+              <label for="splitInput">Test Split Ratio:</label>
+              <span id="splitValBadge" class="val-badge">20%</span>
+            </div>
+            <input type="range" id="splitInput" min="10" max="40" step="5" value="20" class="custom-slider">
+          </div>
+
+          <button id="trainBtn" class="btn-primary">
+            <span class="btn-icon">⚡</span> Train & Evaluate KNN Model
+          </button>
+
+          <!-- Elbow Curve Chart Container -->
+          <div class="chart-container-card">
+            <h4>Error Rate vs K-Value (Elbow Curve)</h4>
+            <div class="canvas-wrapper">
+              <canvas id="elbowChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Algorithm Benchmark Comparison -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Algorithm Benchmark Comparison</h3>
+            <span class="badge-sub">Supervised Models</span>
+          </div>
+          <p class="panel-desc">Evaluating performance across different classification algorithms.</p>
+          
+          <div class="table-responsive">
+            <table class="benchmark-table" id="benchmarkTable">
+              <thead>
+                <tr>
+                  <th>Algorithm</th>
+                  <th>Accuracy</th>
+                  <th>F1-Score</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="benchmarkTableBody">
+                <tr><td colspan="4">Loading benchmark results...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Diagnostics, Metrics & Live Inference -->
+      <div class="panel-column">
+        
+        <!-- Performance Metrics KPI Cards -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Validation & Diagnostic Metrics</h3>
+            <span class="badge-sub">Test Set (80/20 Split)</span>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-box">
+              <div class="kpi-label">Test Accuracy</div>
+              <div class="kpi-value highlight-blue" id="kpiAccuracy">96.7%</div>
+              <div class="kpi-sub">Overall Correctness</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-label">Weighted F1-Score</div>
+              <div class="kpi-value highlight-green" id="kpiF1">96.7%</div>
+              <div class="kpi-sub">Harmonic Mean</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-label">Precision</div>
+              <div class="kpi-value" id="kpiPrecision">97.0%</div>
+              <div class="kpi-sub">Trustworthiness</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-label">Recall (Sensitivity)</div>
+              <div class="kpi-value" id="kpiRecall">96.7%</div>
+              <div class="kpi-sub">Detection Rate</div>
+            </div>
+          </div>
+
+          <!-- Confusion Matrix Visualizer -->
+          <div class="confusion-section">
+            <h4>Diagnostic Tool: Confusion Matrix</h4>
+            <div class="cm-wrapper">
+              <div class="cm-grid" id="confusionGrid">
+                <!-- Generated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Inference Interactive Predictor -->
+        <div class="panel-card live-classifier-card">
+          <div class="panel-header">
+            <h3>Live Flower Classifier (Proximity Engine)</h3>
+            <span class="badge-live">LIVE INFERENCE</span>
+          </div>
+          <p class="panel-desc">Input measurement values in centimeters to classify the flower species in real-time.</p>
+
+          <div class="input-sliders-grid">
+            <div class="slider-field">
+              <div class="field-header">
+                <span>Sepal Length:</span>
+                <strong id="valSepalLen">5.1 cm</strong>
+              </div>
+              <input type="range" id="inSepalLen" min="4.0" max="8.0" step="0.1" value="5.1" class="custom-slider slider-accent">
+            </div>
+
+            <div class="slider-field">
+              <div class="field-header">
+                <span>Sepal Width:</span>
+                <strong id="valSepalWid">3.5 cm</strong>
+              </div>
+              <input type="range" id="inSepalWid" min="2.0" max="4.5" step="0.1" value="3.5" class="custom-slider slider-accent">
+            </div>
+
+            <div class="slider-field">
+              <div class="field-header">
+                <span>Petal Length:</span>
+                <strong id="valPetalLen">1.4 cm</strong>
+              </div>
+              <input type="range" id="inPetalLen" min="1.0" max="7.0" step="0.1" value="1.4" class="custom-slider slider-accent">
+            </div>
+
+            <div class="slider-field">
+              <div class="field-header">
+                <span>Petal Width:</span>
+                <strong id="valPetalWid">0.2 cm</strong>
+              </div>
+              <input type="range" id="inPetalWid" min="0.1" max="2.5" step="0.1" value="0.2" class="custom-slider slider-accent">
+            </div>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="presets-row">
+            <span class="presets-label">Presets:</span>
+            <button class="preset-btn" onclick="applyPreset(5.1, 3.5, 1.4, 0.2)">🌸 Setosa</button>
+            <button class="preset-btn" onclick="applyPreset(6.0, 2.7, 4.5, 1.5)">🌿 Versicolor</button>
+            <button class="preset-btn" onclick="applyPreset(6.8, 3.2, 5.9, 2.3)">🌺 Virginica</button>
+          </div>
+
+          <!-- Prediction Result Banner -->
+          <div class="prediction-result-banner" id="predBanner">
+            <div class="pred-species-box">
+              <div class="pred-label">PREDICTED SPECIES</div>
+              <div class="pred-name" id="predSpeciesName">Iris Setosa</div>
+              <div class="pred-confidence" id="predConfidence">Confidence: 100.0%</div>
+            </div>
+
+            <div class="probability-bars">
+              <div class="prob-row">
+                <span>Setosa</span>
+                <div class="prob-bar-container"><div class="prob-bar-fill fill-setosa" id="probSetosa" style="width: 100%;"></div></div>
+                <span id="probSetosaVal">100%</span>
+              </div>
+              <div class="prob-row">
+                <span>Versicolor</span>
+                <div class="prob-bar-container"><div class="prob-bar-fill fill-versicolor" id="probVersicolor" style="width: 0%;"></div></div>
+                <span id="probVersicolorVal">0%</span>
+              </div>
+              <div class="prob-row">
+                <span>Virginica</span>
+                <div class="prob-bar-container"><div class="prob-bar-fill fill-virginica" id="probVirginica" style="width: 0%;"></div></div>
+                <span id="probVirginicaVal">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div>DecodeLabs Industrial Training Kit • Artificial Intelligence Track</div>
+      <div>Batch 2026 • Greater Lucknow, India • <a href="https://www.decodelabs.tech" target="_blank">www.decodelabs.tech</a></div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
