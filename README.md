@@ -1,13 +1,14 @@
 # DecodeLabs Industrial Training Kit — Project 2
 ## Data Classification Using AI (Supervised Learning Pipeline)
 
+[![Author: Shivam](https://img.shields.io/badge/Author-Shivam-blue.svg)]()
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DecodeLabs Batch 2026](https://img.shields.io/badge/DecodeLabs-Batch%202026-blueviolet.svg)](https://www.decodelabs.tech)
 [![Status: Verified](https://img.shields.io/badge/Status-Verified%20%E2%9C%93-success.svg)]()
 
 > *"We do not write the rules. We provide history, and the machine derives the logic."*  
-> **— DecodeLabs AI Engineering Curriculum**
+> **— Shivam | DecodeLabs AI Track**
 
 ---
 
